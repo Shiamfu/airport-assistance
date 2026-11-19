@@ -1,0 +1,94 @@
+{
+  "airport": "Soaring International Airport - Simulation",
+
+  "gates": {
+    "C12": {
+      "concourse": "C",
+      "x": 100,
+      "y": 100
+    },
+    "C15": {
+      "concourse": "C",
+      "x": 160,
+      "y": 100
+    },
+    "B14": {
+      "concourse": "B",
+      "x": 600,
+      "y": 300
+    },
+    "B10": {
+      "concourse": "B",
+      "x": 520,
+      "y": 300
+    },
+    "A08": {
+      "concourse": "A",
+      "x": 900,
+      "y": 100
+    }
+  },
+
+  "routes": [
+    {
+      "from": "C12",
+      "to": "B14",
+      "distance_m": 650,
+      "wheelchair_accessible": true
+    },
+    {
+      "from": "C15",
+      "to": "B14",
+      "distance_m": 700,
+      "wheelchair_accessible": true
+    },
+    {
+      "from": "C12",
+      "to": "B10",
+      "distance_m": 580,
+      "wheelchair_accessible": true
+    },
+    {
+      "from": "B14",
+      "to": "A08",
+      "distance_m": 800,
+      "wheelchair_accessible": true
+    },
+    {
+      "from": "C15",
+      "to": "A08",
+      "distance_m": 1200,
+      "wheelchair_accessible": false
+    }
+  ],
+
+  "flights": {
+    "DXB402": {
+      "arrival_gate": "C12",
+      "arrival_status": "Landed",
+      "connecting_flight": "SC210",
+      "connecting_gate": "B14",
+      "boarding_closes_in_minutes": 35,
+      "passengers": 180
+    },
+
+    "SC210": {
+      "departure_gate": "B14",
+      "status": "Boarding Soon",
+      "boarding_closes_in_minutes": 35
+    },
+
+    "SC315": {
+      "departure_gate": "A08",
+      "status": "On Time",
+      "boarding_closes_in_minutes": 60
+    }
+  },
+
+  "mobility": {
+    "wheelchair_speed_m_per_min": 45,
+    "walking_speed_m_per_min": 75,
+    "family_safety_buffer_minutes": 10,
+    "wheelchair_safety_buffer_minutes": 15
+  }
+}
