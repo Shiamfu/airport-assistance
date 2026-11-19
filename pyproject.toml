@@ -1,0 +1,20 @@
+[project]
+name = "airport-assistance"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Amaan", email = "amaanarmaanmuhammad@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=3.55.1",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+airport-assistance = "airport_assistance:main"
+
+[build-system]
+requires = ["uv_build>=0.13.8,<0.14.0"]
+build-backend = "uv_build"
