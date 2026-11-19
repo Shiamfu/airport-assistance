@@ -1,6 +1,5 @@
 import json
-
-DATA_PATH = "data/terminals.json"
+from config import DATA_PATH
 
 
 def load_data():

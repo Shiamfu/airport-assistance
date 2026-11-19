@@ -19,10 +19,10 @@ initialise_database()
 st.markdown("""
 <style>
 .stApp {
-    background: #F3F8FD;
+    background: #E75480;
 }
 h1, h2, h3 {
-    color: #173D60;
+    color: #ADD8E6;
 }
 </style>
 """, unsafe_allow_html=True)
