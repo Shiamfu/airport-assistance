@@ -7,7 +7,7 @@ OPEN_ROUTER_API_KEY = os.getenv("OPENROUTER_API")
 
 MODEL = os.getenv(
     "OPENROUTER_MODEL",
-    "google/gemini-2.5-flash"
+    "openrouter/free"
 )
 
 if not OPEN_ROUTER_API_KEY:
