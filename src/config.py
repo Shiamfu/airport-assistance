@@ -14,6 +14,5 @@ MODEL = os.getenv(
 if not OPEN_ROUTER_API_KEY:
     raise ValueError("OpenRouter API key not found")
 
-_DATA_FILE = Path.cwd() / "data" / "terminals.json"
-DATA_PATH = _DATA_FILE if _DATA_FILE.is_file() else None
+DATA_PATH: Path = Path("data/terminals.json")
 
