@@ -5,8 +5,12 @@ from agent import run_agent
 
 from database.db import (
     initialise_database,
-    get_request
+    get_request,
+    get_crime_report,
+    get_medical_request
 )
+
+from dashboard.theme import apply_theme, badge, feature_header
 
 st.set_page_config(
     page_title="SkyLink AI Passenger",
@@ -16,16 +20,7 @@ st.set_page_config(
 
 initialise_database()
 
-st.markdown("""
-<style>
-.stApp {
-    background: #E75480;
-}
-h1, h2, h3 {
-    color: #ADD8E6;
-}
-</style>
-""", unsafe_allow_html=True)
+apply_theme("passenger")
 
 st.title("✈️ SkyLink AI")
 st.caption(
@@ -37,24 +32,69 @@ st.info(
     "All flight and airport data is simulated."
 )
 
-st.subheader("Passenger Assistance")
+st.error(
+    "**Emergency?** If anyone is in danger or a medical "
+    "situation is life-threatening, alert the nearest airport "
+    "staff or call the local emergency number immediately. "
+    "Do not wait for an online request to be approved."
+)
 
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-if "request_id" not in st.session_state:
-    st.session_state.request_id = None
+if "submissions" not in st.session_state:
+    st.session_state.submissions = []
+
+if "queued_prompt" not in st.session_state:
+    st.session_state.queued_prompt = None
+
+# ---------------------------------------------------------------
+# Quick actions
+# ---------------------------------------------------------------
+
+st.subheader("How can we help?")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("🦽 Mobility assistance", use_container_width=True):
+        st.session_state.queued_prompt = (
+            "I need mobility assistance for my connection."
+        )
+
+with col2:
+    if st.button("🚨 Report a crime", use_container_width=True):
+        st.session_state.queued_prompt = (
+            "I would like to report a crime or security concern."
+        )
+
+with col3:
+    if st.button("🩺 Medical assistance", use_container_width=True):
+        st.session_state.queued_prompt = (
+            "I need medical assistance."
+        )
+
+# ---------------------------------------------------------------
+# Chat
+# ---------------------------------------------------------------
+
+st.subheader("Passenger Assistance")
 
 for message in st.session_state.chat:
 
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
-prompt = st.chat_input(
+typed = st.chat_input(
     "How can we help with your airport journey?"
 )
 
+prompt = typed or st.session_state.queued_prompt
+st.session_state.queued_prompt = None
+
 if prompt:
+
+    history = list(st.session_state.chat)
 
     st.session_state.chat.append({
         "role": "user",
@@ -68,15 +108,12 @@ if prompt:
 
         with st.spinner("Checking your journey..."):
 
-            result = run_agent(prompt)
+            result = run_agent(prompt, history)
 
             st.write(result["answer"])
 
-            if result.get("request_id"):
-
-                st.session_state.request_id = (
-                    result["request_id"]
-                )
+            for item in result.get("submissions", []):
+                st.session_state.submissions.append(item)
 
             with st.expander("AI tool activity"):
 
@@ -92,53 +129,106 @@ if prompt:
 
 st.divider()
 
-st.subheader("Mobility Assistance Status")
+# ---------------------------------------------------------------
+# Status of submissions
+# ---------------------------------------------------------------
 
-request_id = st.session_state.request_id
+st.subheader("My Requests")
 
-if request_id:
+if st.button("Refresh status"):
+    st.rerun()
 
-    request = get_request(request_id)
+subs = st.session_state.submissions
 
-    if request:
+if not subs:
+    st.caption("No requests submitted in this session.")
 
-        st.write("Request ID:", request[0])
-        st.write("Passenger:", request[1])
-        st.write("Flight:", request[2])
+for sub in reversed(subs):
+
+    if sub["type"] == "mobility":
+
+        request = get_request(sub["id"])
+        feature_header(f"🦽 Mobility request #{sub['id']}", "mobility")
+
+        if not request:
+            st.error("Request not found.")
+            continue
 
         status = request[7]
+        st.markdown(
+            f"Flight **{request[2]}** · {badge(status)}",
+            unsafe_allow_html=True
+        )
+
+        if status == "PENDING":
+            st.warning("Waiting for airport coordinator approval.")
+        elif status == "APPROVED":
+            st.success("Mobility assistance request approved.")
+            st.write("Coordinator:", request[8])
+        elif status == "REJECTED":
+            st.error("Mobility assistance request was rejected.")
+            st.write("Please contact airport assistance staff.")
+
+    elif sub["type"] == "crime":
+
+        report = get_crime_report(sub["id"])
+        feature_header(f"🚨 Crime report #{sub['id']}", "crime")
+
+        if not report:
+            st.error("Report not found.")
+            continue
+
+        status = report[6]
+        st.markdown(
+            f"{report[2].replace('_', ' ').title()} at "
+            f"**{report[3]}** · {badge(status)}",
+            unsafe_allow_html=True
+        )
+
+        if status == "PENDING":
+            st.warning("Submitted. Waiting for security review.")
+        elif status == "ACKNOWLEDGED":
+            st.info("Security has acknowledged your report.")
+        elif status == "ESCALATED":
+            st.info("Your report has been escalated to security.")
+        elif status == "CLOSED":
+            st.success("Your report has been reviewed and closed.")
+
+        if status != "PENDING":
+            st.write("Coordinator:", report[7])
+
+    elif sub["type"] == "medical":
+
+        med = get_medical_request(sub["id"])
+        feature_header(f"🩺 Medical request #{sub['id']}", "medical")
+
+        if not med:
+            st.error("Request not found.")
+            continue
+
+        status = med[6]
+        st.markdown(
+            f"At **{med[2]}** · Urgency {badge(med[4])} · "
+            f"{badge(status)}",
+            unsafe_allow_html=True
+        )
 
         if status == "PENDING":
             st.warning(
-                "Waiting for airport coordinator approval."
+                "Waiting for coordinator confirmation. "
+                "If life-threatening, call the local emergency "
+                "number or alert the nearest staff now."
             )
-
-        elif status == "APPROVED":
-            st.success(
-                "Mobility assistance request approved."
-            )
-
-            st.write(
-                "Coordinator:", request[8]
-            )
-
-        elif status == "REJECTED":
+        elif status == "DISPATCHED":
+            st.success("A medical team has been dispatched.")
+        elif status == "RESOLVED":
+            st.success("This request has been marked resolved.")
+        elif status == "UNABLE_TO_DISPATCH":
             st.error(
-                "Mobility assistance request was rejected."
+                "We could not dispatch help for this request. "
+                "Please alert the nearest staff or call the "
+                "local emergency number now."
             )
 
-            st.write(
-                "Please contact airport assistance staff."
-            )
-
-    else:
-        st.error("Request not found.")
-
-else:
-    st.caption(
-        "No mobility request has been submitted in this session."
-    )
-
-if st.button("Refresh assistance status"):
-
-    st.rerun()
+        if status != "PENDING":
+            st.write("Coordinator:", med[7])

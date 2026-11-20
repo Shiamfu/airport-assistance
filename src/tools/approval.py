@@ -7,11 +7,9 @@ async def wait_for_approval(
     request_id,
     timeout_seconds=300
 ):
-
     elapsed = 0
 
     while elapsed < timeout_seconds:
-
         request = get_request(request_id)
 
         if request is None:
@@ -19,11 +17,10 @@ async def wait_for_approval(
 
         status = request[7]
 
-        if status == "APPROVED" or "REJECTED":
+        if status in ("APPROVED", "REJECTED"):
             return status
 
         await asyncio.sleep(2)
-
         elapsed += 2
 
     return "TIMEOUT"
