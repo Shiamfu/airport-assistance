@@ -1,11 +1,11 @@
 # PLAN.md
-# SKYLINK AI — TEAM SOARING CRESCENT
+# SWAGON AI — TEAM SOARING CRESCENT
 ## Autonomous Airport Passenger Journey & Mobility Coordination Agent
 
 **Competition:** IEEE CS SYP TECHX Dubai '26  
 **Track:** High School — Foundational AI Agent  
 **Domain:** Aviation & Airport Operations  
-**Product:** SkyLink AI  
+**Product:** Swagon AI  
 **Team:** Soaring Crescent  
 **Development environment:** PyCharm  
 **Primary language:** Python  
@@ -37,7 +37,7 @@ A family sends:
 
 "Our inbound flight DXB-402 just parked at Concourse C, our connecting gate changed to B14, my grandmother needs her wheelchair at the aircraft door, and we only have 35 minutes before boarding closes!"
 
-SkyLink AI must understand the urgency, retrieve the relevant flight information, calculate the transfer requirements, identify the assistance requirement, submit an approval request and keep the family informed.
+Swagon AI must understand the urgency, retrieve the relevant flight information, calculate the transfer requirements, identify the assistance requirement, submit an approval request and keep the family informed.
 
 **Important:** The system must never invent live flight information, guarantee a connection based on an estimate, or claim physical assistance has been dispatched before authorised approval.
 
@@ -249,7 +249,7 @@ Those operations must be performed by deterministic Python functions.
 
 Create the following structure:
 
-SKYLINK-AI/
+SWAGON-AI/
 |
 |-- PLAN.md
 |-- README.md
@@ -1217,7 +1217,7 @@ Priority: MUST HAVE
 
 Tasks:
 
-1. Create the SKYLINK-AI project in PyCharm.
+1. Create the Swagon-AI project in PyCharm.
 2. Configure Python 3.12 virtual environment.
 3. Create the directory structure.
 4. Create requirements.txt.
@@ -1539,7 +1539,7 @@ Tasks:
 
 Deliverable:
 
-Competition-ready SkyLink AI.
+Competition-ready Swagon AI.
 
 HUMAN CHECKPOINT 8:
 
@@ -1640,7 +1640,7 @@ If a requirement is ambiguous, ask before making a major design decision.
 
 ## 10.1 Product positioning
 
-SkyLink AI is an airport passenger assistance and operational coordination platform.
+Swagon AI is an airport passenger assistance and operational coordination platform.
 
 It is designed to connect passengers, airline information and airport assistance staff through one intelligent workflow.
 
@@ -1679,7 +1679,7 @@ These are hypothetical presentation prices, not verified industry quotations.
 
 ## 10.5 Main competitive advantage
 
-SkyLink AI is not just a flight information chatbot.
+Swagon AI is not just a flight information chatbot.
 
 It combines:
 - Natural-language passenger understanding.

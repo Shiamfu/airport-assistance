@@ -6,6 +6,6 @@ client = OpenAI(
     api_key=OPEN_ROUTER_API_KEY,
     default_headers={
         "HTTP-Referer": "http://localhost:8501",
-        "X-Title": "SkyLink AI Airport Assistance"
+        "X-Title": "Swagon AI Airport Assistance"
     }
 )

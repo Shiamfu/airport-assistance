@@ -1,4 +1,4 @@
-"""Shared visual themes for the SkyLink dashboards.
+"""Shared visual themes for the Swagon dashboards.
 
 Each dashboard gets its own colour identity so they are instantly
 distinguishable, and each feature (mobility / crime / medical) has its

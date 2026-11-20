@@ -1,19 +1,16 @@
-
 import streamlit as st
 
 from agent import run_agent
-
 from database.db import (
     initialise_database,
     get_request,
     get_crime_report,
     get_medical_request
 )
-
 from dashboard.theme import apply_theme, badge, feature_header
 
 st.set_page_config(
-    page_title="SkyLink AI Passenger",
+    page_title="Swagon AI Passenger",
     page_icon="✈️",
     layout="wide"
 )
@@ -22,7 +19,27 @@ initialise_database()
 
 apply_theme("passenger")
 
-st.title("✈️ SkyLink AI")
+st.markdown("""
+<style>
+div[data-testid="stAlert"][class*="stAlert-info"] p,
+div[data-testid="stAlert"][class*="stAlert-info"] span,
+div[data-testid="stAlert"][class*="stAlert-info"] li {
+    color: #000000 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.set_page_config(
+    page_title="Swagon AI Passenger",
+    page_icon="✈️",
+    layout="wide"
+)
+
+initialise_database()
+
+apply_theme("passenger")
+
+st.title("✈️ Swagon AI")
 st.caption(
     "Your intelligent airport journey assistant"
 )

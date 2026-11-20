@@ -6,7 +6,7 @@ from tools.routing import calculate_terminal_transfer_time
 from safety.check import check_connection_feasibility
 
 
-class SkyLinkTests(unittest.TestCase):
+class SwagonTests(unittest.TestCase):
 
     # 1. Valid flight
     def test_valid_flight(self):

@@ -5,7 +5,7 @@ if __name__ == "__main__":
     initialise_database()
 
     print("--------------------------------")
-    print("      SKYLINK AI SYSTEM")
+    print("      SWAGON AI SYSTEM")
     print("      TEAM SOARING CRESCENT")
     print("--------------------------------")
 

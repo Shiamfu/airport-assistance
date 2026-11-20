@@ -19,7 +19,7 @@ from database.db import (
 from dashboard.theme import apply_theme, badge, feature_header
 
 st.set_page_config(
-    page_title="SkyLink AI Coordinator",
+    page_title="Swagon AI Coordinator",
     page_icon="🛫",
     layout="wide"
 )
@@ -31,7 +31,7 @@ apply_theme("coordinator")
 st.title("🛫 Airport Coordinator Centre")
 
 st.caption(
-    "TEAM SOARING CRESCENT | GENX AI"
+    "TEAM SOARING CRESCENT | Swagon AI"
 )
 
 st.info(
@@ -81,11 +81,9 @@ tab_mob, tab_crime, tab_med, tab_logs = st.tabs([
 # ---------------------------------------------------------------
 
 with tab_mob:
-
     feature_header("Mobility Requests", "mobility")
 
     if requests:
-
         df = pd.DataFrame(
             requests,
             columns=[
@@ -107,7 +105,6 @@ with tab_mob:
             st.caption("Nothing waiting for review.")
 
         for request in pending_mobility:
-
             request_id = request[0]
 
             with st.expander(
@@ -300,3 +297,4 @@ with tab_logs:
 
     else:
         st.caption("No activity recorded yet.")
+

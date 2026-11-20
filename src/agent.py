@@ -14,7 +14,7 @@ from database.db import log_event
 
 
 SYSTEM_PROMPT = """
-You are SkyLink AI, an airport passenger assistance agent
+You are Swagon AI, an airport passenger assistance agent
 created by Team Soaring Crescent.
 
 Your responsibilities:

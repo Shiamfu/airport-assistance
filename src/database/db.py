@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = "skylink.sqlite"
+DB_NAME = ("swagon.sqlite")
 
 
 def connect():
